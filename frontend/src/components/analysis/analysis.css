@@ -1,0 +1,197 @@
+/* Signal, forecast and news panels. */
+
+/* --- Signal ------------------------------------------------------------ */
+
+.signal-meters {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border);
+}
+
+.signal-meter {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.signal-stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.signal-stat .numeric { font-size: var(--text-lg); font-weight: 600; }
+
+/* A centred meter: zero sits in the middle, the fill grows either way. */
+.meter,
+.rule-bar {
+  position: relative;
+  height: 6px;
+  background: var(--bg-surface-2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.rule-bar { height: 4px; }
+
+.meter-zero,
+.rule-bar-zero {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--border-strong);
+  z-index: 1;
+}
+
+.meter-fill,
+.rule-bar-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 3px;
+  transition: width var(--transition);
+}
+
+.meter-up, .rule-bar-up { background: var(--up); }
+.meter-down, .rule-bar-down { background: var(--down); }
+.meter-neutral, .rule-bar-neutral { background: var(--neutral); }
+
+.rule-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-4) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.rule {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.rule-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.rule-name { font-size: var(--text-sm); font-weight: 500; }
+.rule-score { font-size: var(--text-sm); font-weight: 600; }
+
+.rule-rationale {
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+
+.rule-weight { font-size: var(--text-xs); }
+
+.disclaimer {
+  font-size: var(--text-xs);
+  line-height: 1.45;
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border);
+}
+
+/* --- Forecast ---------------------------------------------------------- */
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metric .numeric { font-size: var(--text-lg); font-weight: 600; }
+
+.metric-note { font-size: var(--text-xs); line-height: 1.35; }
+
+.model-details {
+  margin-top: var(--space-4);
+  font-size: var(--text-sm);
+}
+
+.model-details summary {
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: var(--space-2) 0;
+}
+
+.model-details summary:hover { color: var(--text-primary); }
+
+.model-spec {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-2) var(--space-4);
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-xs);
+}
+
+.model-spec dt { color: var(--text-muted); white-space: nowrap; }
+.model-spec dd { margin: 0; color: var(--text-secondary); word-break: break-word; }
+
+/* --- News -------------------------------------------------------------- */
+
+.sentiment-note {
+  font-size: var(--text-sm);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border);
+  line-height: 1.45;
+}
+
+.news-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.news-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.news-item:last-child { border-bottom: none; }
+
+.news-body { display: flex; flex-direction: column; gap: var(--space-1); min-width: 0; }
+
+.news-title {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.news-title:hover { color: var(--accent); }
+
+.news-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+}
+
+.news-terms { font-family: var(--font-mono); }

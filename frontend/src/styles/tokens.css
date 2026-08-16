@@ -1,0 +1,129 @@
+/*
+ * Design tokens.
+ *
+ * One source of truth for colour, type and spacing. Components reference
+ * tokens only — no literal hex values below this file — so the palette can be
+ * retuned without touching component CSS.
+ *
+ * The dashboard is dark by default (long sessions, dense charts) and the light
+ * theme is a full re-definition of the same token set rather than a filter.
+ */
+
+:root {
+  /* --- Neutrals -------------------------------------------------------
+     Cool and slightly blue rather than pure grey: a neutral with a hue bias
+     keeps large dark surfaces from reading as flat or muddy. */
+  --bg-base: #0b0f17;
+  --bg-surface: #121826;
+  --bg-surface-2: #1a2233;
+  --bg-elevated: #202a3d;
+  --bg-hover: #263047;
+
+  --border: #253049;
+  --border-strong: #354468;
+
+  --text-primary: #e8edf7;
+  --text-secondary: #9aa8c4;
+  --text-muted: #6b7a99;
+
+  /* --- Accent ---------------------------------------------------------
+     A single cyan-leaning blue carries interaction and focus. Market
+     direction gets its own semantic pair so an accent-coloured button is
+     never mistaken for a price movement. */
+  --accent: #3d9df6;
+  --accent-hover: #5cb0ff;
+  --accent-soft: rgba(61, 157, 246, 0.14);
+  --accent-border: rgba(61, 157, 246, 0.4);
+
+  /* --- Market semantics -----------------------------------------------
+     Green up / red down. Deliberately desaturated from pure #00ff00-style
+     values so a wall of tickers stays readable. */
+  --up: #26a96c;
+  --up-soft: rgba(38, 169, 108, 0.14);
+  --down: #e2555c;
+  --down-soft: rgba(226, 85, 92, 0.14);
+  --warn: #d9a441;
+  --warn-soft: rgba(217, 164, 65, 0.14);
+  --neutral: #7d8aa8;
+  --neutral-soft: rgba(125, 138, 168, 0.14);
+
+  /* --- Chart series ---------------------------------------------------
+     Ordered for maximum separation when overlaid on one axis. */
+  --series-1: #3d9df6;
+  --series-2: #b98cf0;
+  --series-3: #f0b64c;
+  --series-4: #4fd1c5;
+  --series-5: #ef7ea8;
+  --grid: rgba(148, 163, 184, 0.12);
+
+  /* --- Type -----------------------------------------------------------
+     A grotesque for interface text, a monospace for every number that sits in
+     a column. Financial tables are unreadable without tabular figures. */
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Cascadia Mono", Consolas, ui-monospace, monospace;
+
+  --text-xs: 0.6875rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
+
+  /* --- Space ----------------------------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-8: 3rem;
+
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-lg: 12px;
+
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+  --sidebar-width: 232px;
+  --topbar-height: 60px;
+
+  --transition: 140ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light theme: the same tokens redefined, not inverted. Market green and red
+   are darkened so they hold contrast against a white ground. */
+[data-theme='light'] {
+  --bg-base: #f5f7fa;
+  --bg-surface: #ffffff;
+  --bg-surface-2: #f0f3f8;
+  --bg-elevated: #ffffff;
+  --bg-hover: #e8edf5;
+
+  --border: #dde3ed;
+  --border-strong: #c3ccdb;
+
+  --text-primary: #131a26;
+  --text-secondary: #4b586e;
+  --text-muted: #7c889e;
+
+  --accent: #1c74d4;
+  --accent-hover: #155bb0;
+  --accent-soft: rgba(28, 116, 212, 0.1);
+  --accent-border: rgba(28, 116, 212, 0.35);
+
+  --up: #12855a;
+  --up-soft: rgba(18, 133, 90, 0.1);
+  --down: #c9333b;
+  --down-soft: rgba(201, 51, 59, 0.1);
+  --warn: #a9750d;
+  --warn-soft: rgba(169, 117, 13, 0.1);
+  --neutral: #64718a;
+  --neutral-soft: rgba(100, 113, 138, 0.1);
+
+  --grid: rgba(71, 85, 105, 0.14);
+
+  --shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 4px 12px rgba(15, 23, 42, 0.05);
+  --shadow-lg: 0 8px 32px rgba(15, 23, 42, 0.12);
+}
