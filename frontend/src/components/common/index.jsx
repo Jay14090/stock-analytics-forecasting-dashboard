@@ -115,6 +115,13 @@ export function ErrorState({ error, onRetry, compact = false }) {
         return 'There is not enough price history for this calculation. Try a longer period.';
       case 'model_unavailable':
         return 'Forecasting needs TensorFlow, which is not installed on the server. Everything else still works.';
+      case 'backend_not_deployed':
+        // Served by the static host when no API is wired up — see netlify.toml.
+        return (
+          error.details?.runLocally
+            ? `Run it locally to see live data: ${error.details.runLocally}`
+            : 'The analytics API is not deployed for this preview.'
+        );
       default:
         return error.message;
     }

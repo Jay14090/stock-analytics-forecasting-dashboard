@@ -1,0 +1,54 @@
+# Netlify configuration for the frontend.
+#
+# Netlify serves the built SPA only. The Flask + TensorFlow backend is a
+# stateful Python process and cannot run here — deploy it to Render, Railway
+# or Fly.io and point API_PROXY_TARGET (below) at it.
+
+[build]
+  base    = "frontend"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# --- API routing ---------------------------------------------------------
+#
+# With a backend deployed, uncomment this and point it at the host. The browser
+# then sees a single origin and CORS never enters the picture.
+#
+# [[redirects]]
+#   from   = "/api/*"
+#   to     = "https://your-api-host.onrender.com/api/:splat"
+#   status = 200
+#   force  = true
+#
+# Until then, answer /api/* with a 503 carrying the same error envelope the
+# real API uses. Without this rule the SPA fallback below would return
+# index.html for API calls, and the client would fail on `JSON.parse` with a
+# syntax error that explains nothing. This way the UI renders a real message.
+[[redirects]]
+  from   = "/api/*"
+  to     = "/api-unavailable.json"
+  status = 503
+  force  = true
+
+# SPA fallback: every non-asset path is handled by React Router. Must come
+# after the API rule, or it would swallow /api requests too.
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    # Vite fingerprints asset filenames, so they are safe to cache forever.
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options        = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy        = "strict-origin-when-cross-origin"

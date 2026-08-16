@@ -11,6 +11,8 @@
 [![Plotly](https://img.shields.io/badge/Plotly-2.35-3F4F75?logo=plotly&logoColor=white)](https://plotly.com/javascript/)
 [![Tests](https://img.shields.io/badge/tests-137%20passing-2ea44f)](#testing)
 
+**[Live UI preview](https://stock-analytics-forecasting.netlify.app)** · *interface only — see [Deployment](#deployment) for why the API needs a separate host*
+
 </div>
 
 ---
@@ -571,15 +573,18 @@ Brief, since the backend is the focus — but a few decisions were deliberate:
 
 ## Deployment
 
-The two halves deploy separately.
+The two halves deploy separately, because they are genuinely different kinds of thing.
 
-**Frontend** — any static host (Netlify, Vercel, Cloudflare Pages):
+**Frontend** — live at **<https://stock-analytics-forecasting.netlify.app>** (config in `frontend/netlify.toml`):
 
 ```bash
 cd frontend && npm run build     # → dist/
 ```
 
-Set `VITE_API_URL` to the deployed API's base URL at build time.
+> **That preview shows the interface, not live data.** No API is wired to it yet, so
+> `/api/*` returns a `503` carrying the same error envelope the real backend uses, and
+> the UI renders a proper message instead of a broken panel. Run it locally — or host the
+> backend and uncomment the `/api/*` proxy in `netlify.toml` — to see real market data.
 
 **Backend** — needs a real Python host (Render, Railway, Fly.io). **Netlify cannot host it**: it's a stateful Flask process with TensorFlow, not a serverless JS function.
 

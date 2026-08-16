@@ -1,0 +1,11 @@
+{
+  "error": {
+    "code": "backend_not_deployed",
+    "message": "This is a front-end-only preview — the analytics API is not deployed.",
+    "details": {
+      "why": "The backend is a stateful Flask + TensorFlow process. Netlify serves static sites and cannot host it.",
+      "runLocally": "git clone https://github.com/Jay14090/stock-analytics-forecasting-dashboard && cd backend && pip install -r requirements.txt && flask --app wsgi run",
+      "toConnectAnApi": "Deploy the backend to Render, Railway or Fly.io, then point the /api/* redirect in frontend/netlify.toml at it."
+    }
+  }
+}
