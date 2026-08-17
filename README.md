@@ -581,12 +581,14 @@ The two halves deploy separately, because they are genuinely different kinds of 
 cd frontend && npm run build     # → dist/
 ```
 
-> **That preview shows the interface, not live data.** No API is wired to it yet, so
-> `/api/*` returns a `503` carrying the same error envelope the real backend uses, and
-> the UI renders a proper message instead of a broken panel. Run it locally — or host the
-> backend and uncomment the `/api/*` proxy in `netlify.toml` — to see real market data.
-
-**Backend** — needs a real Python host (Render, Railway, Fly.io). **Netlify cannot host it**: it's a stateful Flask process with TensorFlow, not a serverless JS function.
+**Backend** — currently running locally and exposed via a free [Cloudflare Quick Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/do-more-with-tunnels/trycloudflare/)
+(`cloudflared tunnel --url http://localhost:5000`), with `netlify.toml`'s `/api/*` redirect
+pointing at the tunnel URL. This is a deliberate stopgap, not the intended production
+setup: Quick Tunnels are anonymous, have **no uptime guarantee**, and the URL changes
+every time the tunnel process restarts — the live site only serves real data while the
+local machine and the tunnel process are both running. For a permanent deployment, move
+the backend to a real host (Render, Railway, Fly.io) and update the redirect target.
+**Netlify itself cannot host the backend**: it's a stateful Flask process with TensorFlow, not a serverless JS function.
 
 ```bash
 APP_ENV=production SECRET_KEY=… gunicorn --workers 2 --threads 4 --timeout 180 wsgi:app
