@@ -1,8 +1,14 @@
 # Netlify configuration for the frontend.
 #
 # Netlify serves the built SPA only. The Flask + TensorFlow backend is a
-# stateful Python process and cannot run here — deploy it to Render, Railway
-# or Fly.io and point API_PROXY_TARGET (below) at it.
+# stateful Python process and cannot run here — it currently runs locally
+# and is exposed via a free Cloudflare Quick Tunnel (trycloudflare.com).
+#
+# IMPORTANT: Quick Tunnel URLs are ephemeral — no uptime guarantee, and the
+# URL changes every time the tunnel process restarts. This only stays live
+# while the local machine + `cloudflared tunnel --url http://localhost:5000`
+# process are running. For a permanent URL, move to a real host (Render,
+# Railway, Fly.io) and update the redirect target below.
 
 [build]
   base    = "frontend"
@@ -14,23 +20,12 @@
 
 # --- API routing ---------------------------------------------------------
 #
-# With a backend deployed, uncomment this and point it at the host. The browser
-# then sees a single origin and CORS never enters the picture.
-#
-# [[redirects]]
-#   from   = "/api/*"
-#   to     = "https://your-api-host.onrender.com/api/:splat"
-#   status = 200
-#   force  = true
-#
-# Until then, answer /api/* with a 503 carrying the same error envelope the
-# real API uses. Without this rule the SPA fallback below would return
-# index.html for API calls, and the client would fail on `JSON.parse` with a
-# syntax error that explains nothing. This way the UI renders a real message.
+# Proxied to the local backend via Cloudflare Quick Tunnel. The browser sees
+# a single origin so CORS never enters the picture.
 [[redirects]]
   from   = "/api/*"
-  to     = "/api-unavailable.json"
-  status = 503
+  to     = "https://ser-grammar-follows-extensive.trycloudflare.com/api/:splat"
+  status = 200
   force  = true
 
 # SPA fallback: every non-asset path is handled by React Router. Must come
